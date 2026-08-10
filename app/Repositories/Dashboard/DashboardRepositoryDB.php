@@ -16,14 +16,14 @@ class DashboardRepositoryDB implements DashboardRepositoryInterface
             ->get();
     }
 
-    public function getExpensesByDate(string $date, int $userId)
+    public function getExpensesByDate(string $startDate, string $endDate, int $userId)
     {
         return DB::table('purchase')
             ->select('date')
             ->selectRaw('SUM(total_price) as total_amount')
             ->where('user_id', $userId)
-            ->where('date', $date)
+            ->whereBetween('date', [$startDate, $endDate])
             ->groupBy('date')
-            ->first();
+            ->get();
     }
 }

@@ -28,9 +28,11 @@ class DashboardController extends Controller
 
     public function getExpensesByDate(Request $request)
     {
-        $date  = $request->query('date');
+        $startDate  = $request->query('start_date');
+        $endDate  = $request->query('end_date');
 
-        $data = $this->dashboardService->getExpensesByDate($date,  Auth::user()->id);
+        $data = $this->dashboardService->getExpensesByDate($startDate, $endDate,  Auth::user()->id);
+        // dd($data);
         return response()->json([
             'data' => $data
         ]);

@@ -27,9 +27,12 @@
             </div>
         </section>
 
-        <div class="row d-flex justify-content-end">
+        <div class="row d-flex justify-content-end mb-2">
             <div class="col-md-2">
-                <input type="date" class="form-control" name="date" id="date" value="{{ date('Y-m-d') }}">
+                <input type="date" class="form-control" name="start_date" id="start_date" value="{{ date('Y-m-d') }}">
+            </div>
+            <div class="col-md-2">
+                <input type="date" class="form-control" name="end_date" id="end_date" value="{{ date('Y-m-d') }}">
             </div>
         </div>
         <section class="row">

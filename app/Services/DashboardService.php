@@ -32,11 +32,21 @@ class DashboardService
         return $weeklyExpense;
     }
 
-    public function getExpensesByDate(string $date, int $userId)
+    public function getExpensesByDate(string $startDate, string $endDate, int $userId)
     {
-        $data = $this->dashboardRepository->getExpensesByDate($date, $userId);
-        $dailyExpense['date'] = $date;
-        $dailyExpense['total_amount'] = 'Rp ' . number_format($data->total_amount ?? 0, 0, ',', '.');
+        $data = $this->dashboardRepository->getExpensesByDate($startDate, $endDate, $userId);
+        $dailyExpense = [];
+        foreach ($data as $item) {
+            $dailyExpense[] = [
+                'date' => $item->date,
+                'total_amount' => 'Rp ' . number_format(
+                    $item->total_amount ?? 0,
+                    0,
+                    ',',
+                    '.'
+                ),
+            ];
+        }
         return $dailyExpense;
     }
 }

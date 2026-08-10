@@ -1,10 +1,11 @@
 const month = document.getElementById("month");
 const year = document.getElementById("year");
-const date = document.getElementById("date");
+const startDate = document.getElementById("start_date");
+const endDate = document.getElementById("end_date");
 
 document.addEventListener("DOMContentLoaded", function () {
     getExpensesData(month.value, year.value);
-    getExpensesDataByDate(date.value);
+    getExpensesDataByDate(startDate.value, endDate.value);
 });
 
 [month, year].forEach((element) => {
@@ -14,8 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-date.addEventListener("change", function () {
-    getExpensesDataByDate(date.value);
+[startDate, endDate].forEach((element) => {
+    element.addEventListener("change", function () {
+        getExpensesDataByDate(startDate.value, endDate.value);
+    });
 });
 
 async function getExpensesData(month, year) {
@@ -59,10 +62,10 @@ function loadCard(data) {
     });
 }
 
-async function getExpensesDataByDate(date) {
+async function getExpensesDataByDate(startDate, endDate) {
     try {
         const response = await fetch(
-            `dashboard/get-expenses-by-date?date=${date}`,
+            `dashboard/get-expenses-by-date?start_date=${startDate}&end_date=${endDate}`,
         );
 
         if (!response.ok) {
@@ -80,25 +83,27 @@ function loadCardDate(data) {
 
     container.innerHTML = "";
 
-    container.insertAdjacentHTML(
-        "beforeend",
-        `
-            <div class="col-6 col-lg-3 col-md-6 amount-week">
+    data.forEach((item) => {
+        container.insertAdjacentHTML(
+            "beforeend",
+            `
+            <div class="col-6 col-lg-3 col-md-6 amount-daily">
                 <div class="card">
                     <div class="card-body px-3 py-4-5">
                         <div class="row">
                             <div class="col-md-8">
                                 <h6 class="text-muted font-semibold">
-                                    ${data.date}
+                                    ${item.date}
                                 </h6>
                                 <h6 class="font-extrabold mb-0">
-                                    ${data.total_amount}
+                                    ${item.total_amount}
                                 </h6>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        `,
-    );
+            `,
+        );
+    });
 }
