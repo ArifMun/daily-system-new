@@ -2,13 +2,17 @@
 
 namespace App\Repositories\DailyExpenses;
 
-class DailyExpensesRepositoryDB
+use App\Repositories\DailyExpenses\Contracts\DailyExpensesRepositoryInterface;
+use Illuminate\Support\Facades\DB;
+
+class DailyExpensesRepositoryDB implements DailyExpensesRepositoryInterface
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
+    public function getDataDaily(string $date, int $userId)
     {
-        //
+        return DB::table('purchase as p')
+            ->select('p.*', 'c.name_category')
+            ->leftJoin('category as c', 'p.category_id', 'c.id')
+            ->where('p.user_id', $userId)
+            ->where('p.date', $date)->get();
     }
 }

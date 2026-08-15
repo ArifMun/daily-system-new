@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DailyExpensesController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,5 +18,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [DashboardController::class, 'index']);
         Route::get('get-expenses-per-week', [DashboardController::class, 'getExpensesPerWeek']);
         Route::get('get-expenses-by-date', [DashboardController::class, 'getExpensesByDate']);
+    });
+
+    Route::prefix('daily-expenses')->group(function () {
+        Route::get('/', [DailyExpensesController::class, 'index'])->name('daily-expense.index');
+        Route::get('get-data-daily', [DailyExpensesController::class, 'getDataDaily']);
     });
 });
