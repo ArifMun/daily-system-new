@@ -23,5 +23,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('daily-expenses')->group(function () {
         Route::get('/', [DailyExpensesController::class, 'index'])->name('daily-expense.index');
         Route::get('get-data-daily', [DailyExpensesController::class, 'getDataDaily']);
+        Route::post('store', [DailyExpensesController::class, 'store']);
+        Route::delete('delete/{id}', [DailyExpensesController::class, 'delete']);
     });
 });
