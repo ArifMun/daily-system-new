@@ -15,4 +15,5 @@ interface DailyExpensesRepositoryInterface
     public function deletePurchase(int $id);
     public function deleteSalaryUsed(int $purchaseId);
     public function findPurchase(int $id);
+    public function updateOrInsert(array $data);
 }

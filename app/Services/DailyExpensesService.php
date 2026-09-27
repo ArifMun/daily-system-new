@@ -69,6 +69,10 @@ class DailyExpensesService
             $purchase = $this->dailyExpensesRepository->store($data);
             $data['purchase_id'] = $purchase;
 
+            if ($data['category_id'] == 11) {
+                $this->dailyExpensesRepository->updateOrInsert($data);
+            }
+
             $this->dailyExpensesRepository->insertSalaryUsed($data);
             $this->dailyExpensesRepository->updateSalary($data, 'store');
             DB::commit();

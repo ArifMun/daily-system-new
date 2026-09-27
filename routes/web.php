@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DailyExpensesController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Pph21Controller;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -13,6 +14,7 @@ Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('auth', [AuthController::class, 'auth'])->name('login.auth');
 Route::post('logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('calculate-pph21', [Pph21Controller::class, 'calculate']);
 Route::middleware(['auth'])->group(function () {
     Route::prefix('dashboard')->group(function () {
         Route::get('/', [DashboardController::class, 'index']);

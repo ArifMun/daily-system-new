@@ -55,7 +55,7 @@ class DashboardService
         $dailyExpense = [];
         foreach ($data as $item) {
             $dailyExpense[] = [
-                'date' => date('d M', strtotime($item->date)),
+                'date' => date('d', strtotime($item->date)),
                 'total_amount' => 'Rp ' . number_format(
                     $item->total_amount ?? 0,
                     0,

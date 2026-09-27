@@ -101,4 +101,17 @@ class DailyExpensesRepositoryDB implements DailyExpensesRepositoryInterface
         return DB::table('purchase')
             ->where('id', $id)->first();
     }
+
+    public function updateOrInsert(array $data)
+    {
+        return DB::table('salary_saving')
+            ->updateOrInsert(
+                [
+                    'purchase_id' => $data['purchase_id']
+                ],
+                [
+                    'nominal' => $data['total_price']
+                ]
+            );
+    }
 }
