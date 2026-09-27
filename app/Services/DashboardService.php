@@ -19,17 +19,34 @@ class DashboardService
         $totalAllWeek = 0;
         foreach ($data as $item) {
             $week = Carbon::parse($item->date)->weekOfMonth();
-            $weeklyExpense['Week - ' . $week] = ($weeklyExpense['Week - ' . $week] ?? 0) + $item->total_price ?? 0;
-            $totalAllWeek += $item->total_price;
+            $weekName = 'Minggu ke - ' . $week;
+
+            $totalPrice = (int) ($item->total_price ?? 0);
+
+            if (!isset($weeklyExpense[$weekName])) {
+                $weeklyExpense[$weekName] = 0;
+            }
+
+            $weeklyExpense[$weekName] += $totalPrice;
+            $totalAllWeek += $totalPrice;
         }
 
-        $weeklyExpense = array_map(
-            fn($total) => 'Rp ' . number_format($total, 0, ',', '.'),
-            $weeklyExpense
-        );
+        $result = [];
 
-        $weeklyExpense['Week - all'] = 'Rp ' . number_format($totalAllWeek, 0, ',', '.');
-        return $weeklyExpense;
+        foreach ($weeklyExpense as $week => $total) {
+            $result[] = [
+                'week' => $week,
+                'total_amount' => $total,
+            ];
+        }
+
+        // Tambahkan total semua minggu
+        $result[] = [
+            'week' => 'Semua - Minggu',
+            'total_amount' => $totalAllWeek,
+        ];
+
+        return $result;
     }
 
     public function getExpensesByDate(string $startDate, string $endDate, int $userId)
@@ -38,13 +55,14 @@ class DashboardService
         $dailyExpense = [];
         foreach ($data as $item) {
             $dailyExpense[] = [
-                'date' => $item->date,
+                'date' => date('d M', strtotime($item->date)),
                 'total_amount' => 'Rp ' . number_format(
                     $item->total_amount ?? 0,
                     0,
                     ',',
                     '.'
                 ),
+                'total_amount_not_format' => (int)$item->total_amount
             ];
         }
         return $dailyExpense;

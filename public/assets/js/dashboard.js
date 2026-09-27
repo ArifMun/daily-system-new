@@ -31,13 +31,71 @@ async function getExpensesData(month, year) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        loadCard(data.data);
+        // loadCard(data.data);
+        renderChartMonthlyCost(data.data);
     } catch (error) {
         console.error("Gagal mengambil data:", error);
     }
 }
 
+let monthlyCostChart = null;
+function renderChartMonthlyCost(data) {
+    console.log(data);
+
+    const categories = data.map((item) => item.week);
+    const values = data.map((item) => Number(item.total_amount) || 0);
+
+    if (monthlyCostChart) {
+        monthlyCostChart.destroy();
+    }
+
+    const options = {
+        chart: {
+            type: "bar",
+            height: 350,
+            toolbar: {
+                show: false,
+            },
+        },
+        series: [
+            {
+                name: "Nominal",
+                data: values,
+            },
+        ],
+        xaxis: {
+            categories: categories,
+        },
+
+        yaxis: {
+            labels: {
+                formatter: function (value) {
+                    return "Rp " + value.toLocaleString("id-ID");
+                },
+            },
+        },
+        tooltip: {
+            y: {
+                formatter: function (value) {
+                    return "Rp " + value.toLocaleString("id-ID");
+                },
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+    };
+    monthlyCostChart = new ApexCharts(
+        document.querySelector("#chart-monthly-cost"),
+        options,
+    );
+
+    monthlyCostChart.render();
+}
+
 function loadCard(data) {
+    console.log(data);
+
     const container = document.getElementById("weekly-expenses");
     container.innerHTML = "";
 
@@ -72,13 +130,72 @@ async function getExpensesDataByDate(startDate, endDate) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        loadCardDate(data.data);
+        renderChartDailyCost(data.data);
+        // loadCardDate(data.data);
     } catch (error) {
         console.error("Gagal mengambil data:", error);
     }
 }
+let dailyCostChart = null;
+function renderChartDailyCost(data) {
+    console.log(data);
+
+    const categories = data.map((item) => item.date);
+    const values = data.map(
+        (item) => Number(item.total_amount_not_format) || 0,
+    );
+
+    if (dailyCostChart) {
+        dailyCostChart.destroy();
+    }
+
+    const options = {
+        chart: {
+            type: "bar",
+            height: 350,
+            toolbar: {
+                show: false,
+            },
+        },
+        series: [
+            {
+                name: "Nominal",
+                data: values,
+            },
+        ],
+        xaxis: {
+            categories: categories,
+        },
+
+        yaxis: {
+            labels: {
+                formatter: function (value) {
+                    return "Rp " + value.toLocaleString("id-ID");
+                },
+            },
+        },
+        tooltip: {
+            y: {
+                formatter: function (value) {
+                    return "Rp " + value.toLocaleString("id-ID");
+                },
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+    };
+    dailyCostChart = new ApexCharts(
+        document.querySelector("#chart-daily-cost"),
+        options,
+    );
+
+    dailyCostChart.render();
+}
 
 function loadCardDate(data) {
+    console.log(data);
+
     const container = document.getElementById("daily-expenses");
 
     container.innerHTML = "";
