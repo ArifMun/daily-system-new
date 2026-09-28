@@ -70,6 +70,7 @@ class DailyExpensesService
             $data['purchase_id'] = $purchase;
 
             if ($data['category_id'] == 11) {
+                // salary saving
                 $this->dailyExpensesRepository->updateOrInsert($data);
             }
 
@@ -84,6 +85,47 @@ class DailyExpensesService
                 'salary_id' => $data['salary_id'] ?? null,
                 'total_price' => $data['total_price'] ?? null,
             ]);
+            throw $e;
+        }
+    }
+
+    public function update(array $data)
+    {
+        $data['price'] = preg_replace('/\D/', '', $data['price']);
+        $data['total_price'] = preg_replace('/\D/', '', $data['total_price']);
+        $data['amount'] = $data['qty'];
+        $data['user_id'] = Auth::user()->id;
+        $dataOld = [];
+        DB::beginTransaction();
+        try {
+            $purchaseOld = $this->dailyExpensesRepository->findPurchase($data['purchase_id']);
+
+            if ($data['total_price'] != $purchaseOld->total_price) {
+
+                $dataOld['salary_id'] = $purchaseOld->salary_id;
+                $dataOld['total_price'] = $purchaseOld->total_price;
+                $this->dailyExpensesRepository->updateSalary($dataOld, 'delete');
+            }
+            $purchase = $this->dailyExpensesRepository->update($data);
+
+            if ($data['category_id'] == 11) {
+                //salary saving
+                $this->dailyExpensesRepository->updateOrInsert($data);
+            }
+
+            $this->dailyExpensesRepository->updateSalaryUsed($data);
+
+            $this->dailyExpensesRepository->updateSalary($data, 'store');
+            DB::commit();
+            return $purchase;
+        } catch (Throwable $e) {
+            DB::rollBack();
+            Log::error('Gagal memperbarui purchase', [
+                'data' => $data,
+                'salary_id' => $data['salary_id'] ?? null,
+                'total_price' => $data['total_price'] ?? null,
+            ]);
+            throw $e;
         }
     }
 

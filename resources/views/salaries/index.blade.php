@@ -54,7 +54,6 @@
                 <div class="card">
                     <div class="card-body">
                         <form action="" id="daily-cost">
-                            <input type="hidden" id="purchase-id" name="purchase_id">
                             <div class="row border-1 bg-danger rounded-3 text-center p-2">
                                 <label for="" class="font-bold text-white">Form Pengeluaran</label>
                             </div>

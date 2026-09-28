@@ -63,6 +63,27 @@ class DailyExpensesController extends Controller
         ]);
     }
 
+    public function update(Request $request)
+    {
+        $validated = $request->validate([
+            'purchase_id' => ['required'],
+            'date' => ['required', 'date'],
+            'name' => ['required', 'string', 'max:255'],
+            'price' => ['required'],
+            'qty' => ['required', 'integer'],
+            'salary_id' => ['required'],
+            'category_id' => ['required'],
+            'total_price' => ['required']
+        ]);
+        $result = $this->dailyExpensesService->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Pengeluaran berhasil diperbarui',
+            'data' => $result
+        ]);
+    }
+
     public function delete(int $id)
     {
         try {

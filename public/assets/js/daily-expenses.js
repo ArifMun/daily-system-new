@@ -37,9 +37,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("btn-save").addEventListener("click", function () {
         const form = document.getElementById("daily-cost");
+        const purchaseId = document.getElementById("purchase-id").value;
         const formData = new FormData(form);
+        let url = `daily-expenses/store`;
+        if (purchaseId != null && purchaseId != "" && purchaseId != 0) {
+            url = `daily-expenses/update`;
+        }
+        console.log(url);
 
-        fetch(`daily-expenses/store`, {
+        fetch(url, {
             method: "POST",
             headers: {
                 "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"')
@@ -57,15 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 // console.error(error);
             });
     });
+
     document.addEventListener("click", function (e) {
         const button = e.target.closest(".btn-delete");
 
         if (!button) return;
 
-        console.log(true);
-
         const id = button.dataset.id;
-        console.log(id);
 
         fetch(`daily-expenses/delete/${id}`, {
             method: "DELETE",
@@ -85,6 +89,26 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch((error) => {
                 console.error(error);
             });
+    });
+
+    document.addEventListener("click", function (e) {
+        const button = e.target.closest(".btn-edit");
+        if (!button) return;
+
+        document.getElementById("purchase-id").value =
+            button.dataset.purchase_id;
+        document.getElementById("date").value = button.dataset.date;
+        document.getElementById("name").value = button.dataset.name;
+        document.getElementById("price").value = button.dataset.price;
+        document.getElementById("qty").value = button.dataset.amount;
+        document.getElementById("salary-id").value = button.dataset.salary_id;
+
+        const categoryChoices =
+            document.getElementById("category-id").choicesInstance;
+        categoryChoices.removeActiveItems();
+        categoryChoices.setChoiceByValue(String(button.dataset.category_id));
+        document.getElementById("total-price").value =
+            button.dataset.total_price;
     });
 });
 
@@ -124,7 +148,11 @@ function loadDataDaily(data) {
             <td>${item.name_category}</td>
             <td>${item.total_price_format}</td>
             <td>
-            <button class="btn btn-sm btn-warning"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-sm btn-warning btn-edit" data-name="${item.name}"
+            data-amount="${item.amount}" data-price="${item.price_format}" data-total_price="${item.total_price_format}"
+            data-category_id="${item.category_id}" data-date="${item.date}" data-salary_id="${item.salary_id}"
+            data-purchase_id="${item.id}">
+            <i class="bi bi-pencil"></i></button>
             <button class="btn btn-sm btn-danger btn-delete" data-id="${item.id}"><i class="bi bi-trash"></i></button>
             </td>
         </tr>
@@ -150,6 +178,7 @@ function formatRupiah(value) {
 
 function resetForm() {
     document.getElementById("name").value = "";
+    document.getElementById("purchase-id").value = "";
     document.getElementById("price").value = "";
     document.getElementById("total-price").value = "";
     document.getElementById("qty").value = "";

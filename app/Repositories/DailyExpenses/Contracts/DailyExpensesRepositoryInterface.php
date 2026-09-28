@@ -10,10 +10,12 @@ interface DailyExpensesRepositoryInterface
     public function getCategory();
     public function getSalaries(int $userId);
     public function store(array $data);
+    public function update(array $data);
     public function updateSalary(array $data, string $process);
     public function insertSalaryUsed(array $data);
     public function deletePurchase(int $id);
     public function deleteSalaryUsed(int $purchaseId);
     public function findPurchase(int $id);
     public function updateOrInsert(array $data);
+    public function updateSalaryUsed(array $data);
 }

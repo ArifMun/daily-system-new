@@ -59,6 +59,21 @@ class DailyExpensesRepositoryDB implements DailyExpensesRepositoryInterface
                 'total_price' => $data['total_price']
             ]);
     }
+    public function update(array $data)
+    {
+        return DB::table('purchase')
+            ->where('id', $data['purchase_id'])
+            ->update([
+                'date' => $data['date'],
+                'user_id' => $data['user_id'],
+                'category_id' => $data['category_id'],
+                'salary_id' => $data['salary_id'],
+                'name' => $data['name'],
+                'price' => $data['price'],
+                'amount' => $data['amount'],
+                'total_price' => $data['total_price']
+            ]);
+    }
 
     public function updateSalary(array $data, string $process)
     {
@@ -76,6 +91,15 @@ class DailyExpensesRepositoryDB implements DailyExpensesRepositoryInterface
     {
         return DB::table('salary_used')->insert([
             'purchase_id' => $data['purchase_id'],
+            'salary_id' => $data['salary_id'],
+            'date' => $data['date'],
+            'user_id' => $data['user_id']
+        ]);
+    }
+
+    public function updateSalaryUsed(array $data)
+    {
+        return DB::table('salary_used')->where('purchase_id', $data['purchase_id'])->update([
             'salary_id' => $data['salary_id'],
             'date' => $data['date'],
             'user_id' => $data['user_id']
