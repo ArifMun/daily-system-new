@@ -15,6 +15,12 @@
                 <span>Pengeluaran</span>
             </a>
         </li>
+        <li class="sidebar-item {{ request()->is('salaries*') ? 'active' : '' }}">
+            <a href="{{ url('salaries') }}" class="sidebar-link">
+                <i class="bi bi-basket-fill"></i>
+                <span>Pemasukan</span>
+            </a>
+        </li>
 
         <li class="sidebar-item has-sub">
             <a href="#" class="sidebar-link">
