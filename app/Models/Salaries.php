@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Salaries extends Model
 {
     protected $table = 'salary';
-    public $fillable = [
+    protected $fillable = [
         'user_id',
         'name_month',
         'salary_month',

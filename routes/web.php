@@ -34,5 +34,6 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('salaries')->group(function () {
         Route::get('/', [SalariesController::class, 'index'])->name('salaries');
         Route::get('get-data', [SalariesController::class, 'getData']);
+        Route::post('store', [SalariesController::class, 'store']);
     });
 });

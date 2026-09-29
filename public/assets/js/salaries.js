@@ -1,6 +1,34 @@
 const tableSalaries = document.getElementById("list-salaries");
 document.addEventListener("DOMContentLoaded", function () {
     getData();
+
+    document.getElementById("btn-save").addEventListener("click", function () {
+        const form = document.getElementById("salary-earning");
+        const salaryId = document.getElementById("salary-id");
+        const formData = new FormData(form);
+
+        let url = `salaries/store`;
+        console.log(url);
+
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "X-CSRF-TOKEN": document.querySelector(
+                    'meta[name="csrf-token"]',
+                ).content,
+                Accept: "application/json",
+            },
+            body: formData,
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                getData();
+                // resetForm();
+            })
+            .catch((error) => {
+                console.error("ERROR:", error);
+            });
+    });
 });
 
 async function getData() {
@@ -19,7 +47,6 @@ async function getData() {
 }
 
 function loadDataSalaries(data) {
-    // console.log(data);
     tableSalaries.innerHTML = "";
 
     data.forEach((item, index) => {

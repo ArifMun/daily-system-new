@@ -30,7 +30,8 @@
             <div class="col-4 col-lg-4">
                 <div class="card">
                     <div class="card-body">
-                        <form action="" id="daily-cost">
+                        <form action="" id="salary-earning">
+                            <input type="hidden" id="salary-id" name="salary_id">
                             <div class="row border-1 bg-danger rounded-3 text-center p-2">
                                 <label for="" class="font-bold text-white">Form Pemasukan</label>
                             </div>
@@ -50,7 +51,8 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label for="">Nominal</label>
-                                    <input type="text" name="price" id="price" class="form-control right" required>
+                                    <input type="text" name="salary_amount" id="salary_amount" class="form-control right"
+                                        required>
                                 </div>
                             </div>
                             <div class="row">

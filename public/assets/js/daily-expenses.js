@@ -48,8 +48,9 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(url, {
             method: "POST",
             headers: {
-                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"')
-                    .content,
+                "X-CSRF-TOKEN": document.querySelector(
+                    'meta[name="csrf-token"]',
+                ).content,
                 Accept: "application/json",
             },
             body: formData,
