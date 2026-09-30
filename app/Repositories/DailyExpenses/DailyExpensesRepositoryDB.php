@@ -26,10 +26,11 @@ class DailyExpensesRepositoryDB implements DailyExpensesRepositoryInterface
 
     public function findSalary(int $userId)
     {
-        return DB::table('salary')
-            ->select('salary_remaining', 'name_month', 'user_id')
-            ->where('user_id', $userId)
-            ->orderBy('id', 'desc')
+        return DB::table('salary as s')
+            ->select('s.salary_remaining', 's.name_month', 's.user_id')
+            ->join('purchase as p', 's.id', 'p.salary_id')
+            ->where('s.user_id', $userId)
+            ->orderBy('p.id', 'desc')
             ->first();
     }
 

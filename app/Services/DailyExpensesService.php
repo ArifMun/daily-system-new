@@ -33,7 +33,6 @@ class DailyExpensesService
         $userId = Auth::user()->id;
         $cost = $this->dailyExpensesRepository->getCostByPeriod($startDate, $endDate, $userId);
         $salary = $this->dailyExpensesRepository->findSalary($userId);
-
         // $salaryUsed = DB::table('salary_used as su')
         //     ->where('su.salary_id', '51')
         //     ->join('purchase as p', 'su.purchase_id', 'p.id')

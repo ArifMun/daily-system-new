@@ -15,8 +15,10 @@
                                     <th>No</th>
                                     <th>Nama</th>
                                     <th>Nominal</th>
+                                    <th>Sisa</th>
                                     <th>Tanggal</th>
                                     <th>Jenis</th>
+                                    <th>Aksi</th>
                                 </thead>
                                 <tbody id="list-salaries">
 
@@ -32,7 +34,7 @@
                     <div class="card-body">
                         <form action="" id="salary-earning">
                             <input type="hidden" id="salary-id" name="salary_id">
-                            <div class="row border-1 bg-danger rounded-3 text-center p-2">
+                            <div class="row border-1 bg-primary rounded-3 text-center p-2">
                                 <label for="" class="font-bold text-white">Form Pemasukan</label>
                             </div>
                             <div class="row mt-2">
@@ -51,7 +53,7 @@
                             <div class="row">
                                 <div class="form-group">
                                     <label for="">Nominal</label>
-                                    <input type="text" name="salary_amount" id="salary_amount" class="form-control right"
+                                    <input type="text" name="salary_amount" id="salary-amount" class="form-control right"
                                         required>
                                 </div>
                             </div>

@@ -12,8 +12,11 @@ class Salaries extends Model
         'name_month',
         'salary_month',
         'salary_remaining',
+        'salary_amount',
         'date',
         'date_salary_payment',
-        'fund_type'
+        'fund_type',
+        'created_at',
+        'updated_at'
     ];
 }
