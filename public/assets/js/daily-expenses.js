@@ -149,12 +149,12 @@ function loadDataDaily(data) {
             <td>${item.name_category}</td>
             <td>${item.total_price_format}</td>
             <td>
-
-            <button class="btn bt<button class="btn btn-sm btn-warning btn-edit" data-name="${item.name}"
+            <button class="btn btn-sm btn-warning btn-edit" data-name="${item.name}"
             data-amount="${item.amount}" data-price="${item.price_format}" data-total_price="${item.total_price_format}"
             data-category_id="${item.category_id}" data-date="${item.date}" data-salary_id="${item.salary_id}"
             data-purchase_id="${item.id}">
-            <i class="bi bi-pencil"></i></button>n-sm btn-danger btn-delete" data-id="${item.id}"><i class="bi bi-trash"></i></button>
+            <i class="bi bi-pencil"></i></button>
+            <button class="btn btn-sm btn-danger btn-delete" data-id="${item.id}"><i class="bi bi-trash"></i></button>
             </td>
         </tr>
     `,
