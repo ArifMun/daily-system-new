@@ -5,6 +5,7 @@ use App\Http\Controllers\DailyExpensesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Pph21Controller;
 use App\Http\Controllers\SalariesController;
+use App\Http\Controllers\SalarySavingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -36,5 +37,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('get-data', [SalariesController::class, 'getData']);
         Route::post('store', [SalariesController::class, 'store']);
         Route::post('update', [SalariesController::class, 'update']);
+    });
+
+    Route::prefix('salary-saving')->group(function () {
+        Route::get('/', [SalarySavingController::class, 'index'])->name('salary-saving');
     });
 });
