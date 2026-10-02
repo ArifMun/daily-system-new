@@ -22,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [DashboardController::class, 'index']);
         Route::get('get-expenses-per-week', [DashboardController::class, 'getExpensesPerWeek']);
         Route::get('get-expenses-by-date', [DashboardController::class, 'getExpensesByDate']);
+        Route::get('get-expenses-group-category', [DashboardController::class, 'getExpenseGroupCategory']);
     });
 
     Route::prefix('daily-expenses')->group(function () {

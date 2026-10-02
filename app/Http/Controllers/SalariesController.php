@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\Salaries;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SalariesController extends Controller
 {
@@ -14,7 +16,7 @@ class SalariesController extends Controller
 
     public function getData()
     {
-        $salaries = Salaries::orderByDesc('id')->get();
+        $salaries = Salaries::where('user_id', Auth::user()->id)->orderByDesc('id')->get();
         $salaries = $salaries->map(function ($item) {
             $item->salary_amount = 'Rp ' . number_format($item->salary_amount, 0, ',', '.');
             $item->salary_remaining = 'Rp ' . number_format($item->salary_remaining, 0, ',', '.');

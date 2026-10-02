@@ -37,4 +37,15 @@ class DashboardController extends Controller
             'data' => $data
         ]);
     }
+
+    public function getExpenseGroupCategory(Request $request)
+    {
+        $month = $request->query('month');
+        $year = $request->query('year');
+
+        $data = $this->dashboardService->getExpenseGroupCategory($month, $year);
+        return response()->json([
+            'data' => $data
+        ]);
+    }
 }

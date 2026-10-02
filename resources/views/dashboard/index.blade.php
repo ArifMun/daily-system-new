@@ -21,7 +21,7 @@
         </div>
 
         <section class="row">
-            <div class="col-12 col-lg-12">
+            <div class="col-6 col-lg-6">
                 {{-- <div class="row" id="weekly-expenses">
                 </div> --}}
                 <div class="card">
@@ -30,6 +30,16 @@
                     </div>
                     <div class="card-body">
                         <div id="chart-monthly-cost"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Pengeluaran Per Kategori</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="chart-monthly-category"></div>
                     </div>
                 </div>
             </div>

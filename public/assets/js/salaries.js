@@ -86,9 +86,9 @@ function loadDataSalaries(data) {
             `<tr>
                 <td>${index + 1}</td>
                 <td>${item.name_month}</td>
-                <td>${item.salary_amount}</td>
+                <td style="white-space:nowrap">${item.salary_amount}</td>
                 <td>${item.salary_remaining}</td>
-                <td>${item.date_salary_payment}</td>
+                <td style="white-space:nowrap">${item.date_salary_payment}</td>
                 <td>${fundType}</td>
                 <td>
                     <button class="btn btn-sm btn-warning btn-edit" data-name_month="${item.name_month}"

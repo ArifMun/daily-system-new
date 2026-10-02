@@ -26,4 +26,17 @@ class DashboardRepositoryDB implements DashboardRepositoryInterface
             ->groupBy('date')
             ->get();
     }
+
+    public function getExpenseGroupCategory(int $month, int $year, int $userId)
+    {
+        return DB::table('purchase as p')
+            ->select('c.name_category', 'p.category_id')
+            ->selectRaw('SUM(total_price) as total_amount')
+            ->join('category as c', 'p.category_id', 'c.id')
+            ->where('user_id', $userId)
+            ->whereMonth('date', $month)
+            ->whereYear('date', $year)
+            ->groupBy('c.id')
+            ->get();
+    }
 }

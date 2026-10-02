@@ -2,15 +2,17 @@
 
 namespace App\Services;
 
+use App\Repositories\DailyExpenses\Contracts\DailyExpensesRepositoryInterface;
 use App\Repositories\Dashboard\Contracts\DashboardRepositoryInterface;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardService
 {
     /**
      * Create a new class instance.
      */
-    public function __construct(protected DashboardRepositoryInterface $dashboardRepository) {}
+    public function __construct(protected DashboardRepositoryInterface $dashboardRepository, protected DailyExpensesRepositoryInterface $dailyRepository) {}
 
     public function getExpensePerWeek(int $month, int $year, int $userId)
     {
@@ -66,5 +68,29 @@ class DashboardService
             ];
         }
         return $dailyExpense;
+    }
+
+    public function getExpenseGroupCategory(int $month, int $year)
+    {
+        $categories = $this->dailyRepository->getCategory();
+        $data = $this->dashboardRepository->getExpenseGroupCategory($month, $year, Auth::user()->id);
+        $groupCategory = [];
+
+        foreach ($categories as $index => $category) {
+            $groupCategory[$index] = [
+                'name_category' => $category->name_category,
+                'total_amount' => 0
+            ];
+
+            foreach ($data as $item) {
+                if ($item->category_id == $category->id) {
+                    $groupCategory[$index] = [
+                        'name_category' => $category->name_category,
+                        'total_amount' => (int)$item->total_amount,
+                    ];
+                }
+            }
+        }
+        return $groupCategory;
     }
 }

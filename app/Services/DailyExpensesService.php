@@ -67,7 +67,6 @@ class DailyExpensesService
 
             $purchase = $this->dailyExpensesRepository->store($data);
             $data['purchase_id'] = $purchase;
-
             if ($data['category_id'] == 11) {
                 // salary saving
                 $this->dailyExpensesRepository->updateOrInsert($data);

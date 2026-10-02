@@ -5,6 +5,7 @@ const endDate = document.getElementById("end_date");
 
 document.addEventListener("DOMContentLoaded", function () {
     getExpensesData(month.value, year.value);
+    getExpensesGroupCategory(month.value, year.value);
     getExpensesDataByDate(startDate.value, endDate.value);
 });
 
@@ -12,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     element.addEventListener("change", function () {
         console.log("CHANGE:", element.id, element.value);
         getExpensesData(month.value, year.value);
+        getExpensesGroupCategory(month.value, year.value);
     });
 });
 
@@ -33,6 +35,22 @@ async function getExpensesData(month, year) {
         const data = await response.json();
         // loadCard(data.data);
         renderChartMonthlyCost(data.data);
+    } catch (error) {
+        console.error("Gagal mengambil data:", error);
+    }
+}
+
+async function getExpensesGroupCategory(month, year) {
+    try {
+        const response = await fetch(
+            `dashboard/get-expenses-group-category?month=${month}&year=${year}`,
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        renderChartMonthlyCategory(data.data);
     } catch (error) {
         console.error("Gagal mengambil data:", error);
     }
@@ -93,9 +111,62 @@ function renderChartMonthlyCost(data) {
     monthlyCostChart.render();
 }
 
-function loadCard(data) {
+let monthlyCategoryChart = null;
+function renderChartMonthlyCategory(data) {
     console.log(data);
 
+    const categories = data.map((item) => item.name_category);
+    const values = data.map((item) => Number(item.total_amount) || 0);
+
+    if (monthlyCategoryChart) {
+        monthlyCategoryChart.destroy();
+    }
+
+    const options = {
+        chart: {
+            type: "bar",
+            height: 350,
+            toolbar: {
+                show: false,
+            },
+        },
+        series: [
+            {
+                name: "Nominal",
+                data: values,
+            },
+        ],
+        xaxis: {
+            categories: categories,
+        },
+
+        yaxis: {
+            labels: {
+                formatter: function (value) {
+                    return "Rp " + value.toLocaleString("id-ID");
+                },
+            },
+        },
+        tooltip: {
+            y: {
+                formatter: function (value) {
+                    return "Rp " + value.toLocaleString("id-ID");
+                },
+            },
+        },
+        dataLabels: {
+            enabled: false,
+        },
+    };
+    monthlyCategoryChart = new ApexCharts(
+        document.querySelector("#chart-monthly-category"),
+        options,
+    );
+
+    monthlyCategoryChart.render();
+}
+
+function loadCard(data) {
     const container = document.getElementById("weekly-expenses");
     container.innerHTML = "";
 
@@ -138,8 +209,6 @@ async function getExpensesDataByDate(startDate, endDate) {
 }
 let dailyCostChart = null;
 function renderChartDailyCost(data) {
-    console.log(data);
-
     const categories = data.map((item) => item.date);
     const values = data.map(
         (item) => Number(item.total_amount_not_format) || 0,
@@ -194,8 +263,6 @@ function renderChartDailyCost(data) {
 }
 
 function loadCardDate(data) {
-    console.log(data);
-
     const container = document.getElementById("daily-expenses");
 
     container.innerHTML = "";
