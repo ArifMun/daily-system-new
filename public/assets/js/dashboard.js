@@ -51,6 +51,7 @@ async function getExpensesGroupCategory(month, year) {
         }
         const data = await response.json();
         renderChartMonthlyCategory(data.data);
+        renderChartSalaryAndRemaining(data.salaryAndRemaining);
     } catch (error) {
         console.error("Gagal mengambil data:", error);
     }
@@ -290,4 +291,81 @@ function loadCardDate(data) {
             `,
         );
     });
+}
+
+let salaryAndRemaining = null;
+
+function renderChartSalaryAndRemaining(data) {
+    console.log(data);
+
+    const categories = data.map((item) => item.name_month);
+
+    const salaryValues = data.map((item) => Number(item.salary_amount) || 0);
+
+    const remainingValues = data.map(
+        (item) => Number(item.remaining_amount) || 0,
+    );
+
+    if (salaryAndRemaining) {
+        salaryAndRemaining.destroy();
+    }
+
+    const options = {
+        chart: {
+            type: "bar",
+            height: 350,
+            toolbar: {
+                show: false,
+            },
+        },
+
+        series: [
+            {
+                name: "Salary",
+                data: salaryValues,
+            },
+            {
+                name: "Remaining",
+                data: remainingValues,
+            },
+        ],
+
+        xaxis: {
+            categories: categories,
+        },
+
+        yaxis: {
+            labels: {
+                formatter: function (value) {
+                    return "Rp " + value.toLocaleString("id-ID");
+                },
+            },
+        },
+
+        tooltip: {
+            y: {
+                formatter: function (value) {
+                    return "Rp " + value.toLocaleString("id-ID");
+                },
+            },
+        },
+
+        dataLabels: {
+            enabled: false,
+        },
+
+        plotOptions: {
+            bar: {
+                horizontal: false,
+                columnWidth: "55%",
+            },
+        },
+    };
+
+    salaryAndRemaining = new ApexCharts(
+        document.querySelector("#chart-salary-and-remaining"),
+        options,
+    );
+
+    salaryAndRemaining.render();
 }

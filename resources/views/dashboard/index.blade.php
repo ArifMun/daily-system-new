@@ -54,9 +54,17 @@
             </div>
         </div>
         <section class="row">
-            <div class="col-12 col-lg-12">
-                {{-- <div class="row" id="daily-expenses">
-                </div> --}}
+            <div class="col-6 col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Gaji dan Sisa</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="chart-salary-and-remaining"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-lg-6">
                 <div class="card">
                     <div class="card-header">
                         <h4>Pengeluaran Harian</h4>
@@ -74,3 +82,4 @@
     <script src="{{ asset('assets/extensions/apexcharts/apexcharts.min.js') }}"></script>
     <script src="{{ asset('assets/static/js/pages/dashboard.js') }}"></script>
 @endpush
+x

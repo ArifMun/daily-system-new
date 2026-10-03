@@ -93,4 +93,11 @@ class DashboardService
         }
         return $groupCategory;
     }
+
+    public function getSalaryAndRemaining(int $year)
+    {
+        $data = $this->dashboardRepository->getSalaryAndRemaining($year, Auth::user()->id);
+
+        return $data;
+    }
 }

@@ -44,8 +44,10 @@ class DashboardController extends Controller
         $year = $request->query('year');
 
         $data = $this->dashboardService->getExpenseGroupCategory($month, $year);
+        $salaryAndRemaining = $this->dashboardService->getSalaryAndRemaining($year);
         return response()->json([
-            'data' => $data
+            'data' => $data,
+            'salaryAndRemaining' => $salaryAndRemaining
         ]);
     }
 }

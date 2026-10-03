@@ -39,4 +39,17 @@ class DashboardRepositoryDB implements DashboardRepositoryInterface
             ->groupBy('c.id')
             ->get();
     }
+
+    public function getSalaryAndRemaining(int $year, int $userId)
+    {
+        return DB::table('salary as s')
+            ->select('s.name_month', 's.salary_amount')
+            ->selectRaw('SUM(p.total_price) as total_cost')
+            ->selectRaw('(s.salary_amount - SUM(p.total_price)) as remaining_amount')
+            ->join('purchase as p', 's.id', 'p.salary_id')
+            ->whereYear('s.date_salary_payment', $year)
+            ->where('s.user_id', $userId)
+            ->groupBy('s.id')
+            ->get()->toArray();
+    }
 }
