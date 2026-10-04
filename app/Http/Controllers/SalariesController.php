@@ -14,9 +14,11 @@ class SalariesController extends Controller
         return view('salaries.index');
     }
 
-    public function getData()
+    public function getData(Request $request)
     {
-        $salaries = Salaries::where('user_id', Auth::user()->id)->orderByDesc('id')->get();
+        $salaries = Salaries::where('user_id', Auth::user()->id)
+            ->whereYear('date_salary_payment', $request->year)
+            ->orderByDesc('id')->get();
         $salaries = $salaries->map(function ($item) {
             $item->salary_amount = 'Rp ' . number_format($item->salary_amount, 0, ',', '.');
             $item->salary_remaining = 'Rp ' . number_format($item->salary_remaining, 0, ',', '.');
@@ -24,9 +26,17 @@ class SalariesController extends Controller
             $item->date_salary_payment = date('d M Y', strtotime($item->date_salary_payment));
             return $item;
         });
+        $totalSalaryAmount = $salaries->sum(function ($query) {
+            return $query->getRawOriginal('salary_amount');
+        });
+        $totalSalaryRemaining = $salaries->sum(function ($query) {
+            return $query->getRawOriginal('salary_remaining');
+        });
         return response()->json([
             'success' => true,
-            'list' => $salaries
+            'list' => $salaries,
+            'total_salary_amount' => 'Rp ' . number_format($totalSalaryAmount, 0, ',', '.'),
+            'total_salary_remaining' => 'Rp ' . number_format($totalSalaryRemaining, 0, ',', '.'),
         ]);
     }
 

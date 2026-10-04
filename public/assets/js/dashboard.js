@@ -321,11 +321,11 @@ function renderChartSalaryAndRemaining(data) {
 
         series: [
             {
-                name: "Salary",
+                name: "Gaji/Pemasukan",
                 data: salaryValues,
             },
             {
-                name: "Remaining",
+                name: "Sisa",
                 data: remainingValues,
             },
         ],

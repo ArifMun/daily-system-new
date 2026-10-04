@@ -8,6 +8,10 @@
         <div class="row">
             <div class="col-4 col-lg-4">
                 <div class="card">
+                    <div class="card-header">
+                        <span style="font-size: 10px">Total Tabungan</span><br>
+                        <span id="total-salary-saving">{{ 'Rp ' . number_format($totalSalarySaving) }}</span>
+                    </div>
                     <div class="card-body">
                         <table class="table" style="font-size: 14px !important">
                             <thead>

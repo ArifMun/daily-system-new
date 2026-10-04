@@ -8,6 +8,27 @@
 
             <div class="col-8 col-lg-8">
                 <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <select name="year" id="year" class="form-control">
+                                    @for ($i = 2024; $i <= date('Y'); $i++)
+                                        <option value="{{ $i }}" {{ $i == date('Y') ? 'selected' : '' }}>
+                                            {{ $i }}
+                                        </option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="" style="font-size: 10px">Total Pemasukan</label><br>
+                                <span id="total-salary-amount"></span>
+                            </div>
+                            <div class="col-lg-4">
+                                <label for="" style="font-size: 10px">Total Sisa</label><br>
+                                <span id="total-salary-remaining"></span>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="row">
                             <table class="table" style="font-size: 14px !important">

@@ -11,7 +11,7 @@
                 <div class="card">
                     <div class="card-body">
 
-                        <div class="row bg-success rounded-4 text-white p-1">
+                        <div class="row bg-primary rounded-3 text-white p-1">
                             <div class="col-lg-3">
                                 <span style="font-size: 10px">Hari ini</span><br>
                                 <span id="this-day"></span>
@@ -55,7 +55,7 @@
                     <div class="card-body">
                         <form action="" id="daily-cost">
                             <input type="hidden" id="purchase-id" name="purchase_id">
-                            <div class="row border-1 bg-danger rounded-3 text-center p-2">
+                            <div class="row border-1 bg-primary rounded-3 text-center p-2">
                                 <label for="" class="font-bold text-white">Form Pengeluaran</label>
                             </div>
                             <div class="row mt-2">
@@ -67,28 +67,28 @@
                             </div>
                             <div class="row">
                                 <div class="form-group">
-                                    <label for="">Nama</label>
+                                    <label for="">Nama <span class="text-danger">*</span></label>
                                     <input type="text" class="form-control" name="name" id="name" required>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-6 col-6">
                                     <div class="form-group">
-                                        <label for="">Harga</label>
+                                        <label for="">Harga <span class="text-danger">*</span></label>
                                         <input type="text" name="price" id="price" class="form-control right"
                                             required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-6">
                                     <div class="form-group">
-                                        <label for="">Jumlah</label>
+                                        <label for="">Jumlah <span class="text-danger">*</span></label>
                                         <input type="number" name="qty" id="qty" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="form-group">
-                                    <label for="">Sumber Dana</label>
+                                    <label for="">Sumber Dana <span class="text-danger">*</span></label>
                                     <select name="salary_id" id="salary-id" class="form-select select2" required>
                                         <option value="">-- Pilih Sumber Dana --</option>
                                         @foreach ($salaries as $item)
@@ -99,7 +99,7 @@
                             </div>
                             <div class="row">
                                 <div class="form-group">
-                                    <label for="">Kategori</label>
+                                    <label for="">Kategori <span class="text-danger">*</span></label>
                                     <select name="category_id" id="category-id" class="choices form-select" required>
                                         <option value="">-- Pilih Kategori --</option>
                                         @foreach ($categories as $item)

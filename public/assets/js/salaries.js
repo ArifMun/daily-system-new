@@ -1,6 +1,7 @@
 const tableSalaries = document.getElementById("list-salaries");
 document.addEventListener("DOMContentLoaded", function () {
-    getData();
+    const year = document.getElementById("year").value;
+    getData(year);
 
     const salaryAmount = document.getElementById("salary-amount");
 
@@ -53,11 +54,18 @@ document.addEventListener("DOMContentLoaded", function () {
             btn.dataset.salary_amount;
         document.getElementById("fund-type").value = btn.dataset.fund_type;
     });
+
+    document.addEventListener("change", function (e) {
+        const select = e.target.closest("#year");
+        if (select) {
+            getData(select.value);
+        }
+    });
 });
 
-async function getData() {
+async function getData(year) {
     try {
-        const response = await fetch(`salaries/get-data`);
+        const response = await fetch(`salaries/get-data?year=${year}`);
 
         if (!response.ok) {
             throw new Error(`HTTP error:${response.status}`);
@@ -65,6 +73,10 @@ async function getData() {
 
         const data = await response.json();
         loadDataSalaries(data.list);
+        document.getElementById("total-salary-amount").textContent =
+            data.total_salary_amount;
+        document.getElementById("total-salary-remaining").textContent =
+            data.total_salary_remaining;
     } catch (error) {
         console.log(error);
     }

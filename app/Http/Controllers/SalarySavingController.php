@@ -14,6 +14,7 @@ class SalarySavingController extends Controller
         $salarySaving = SalarySaving::with('purchase')->whereHas('purchase', function ($query) {
             $query->where('user_id', Auth::id());
         })->get();
-        return view('salary-saving.index', compact('salarySaving'));
+        $totalSalarySaving = $salarySaving->sum('nominal');
+        return view('salary-saving.index', compact('salarySaving', 'totalSalarySaving'));
     }
 }

@@ -29,7 +29,7 @@
         </li>
 
 
-        <li class="sidebar-item">
+        {{-- <li class="sidebar-item">
             <a href="https://zuramai.github.io/mazer/docs" class="sidebar-link">
                 <i class="bi bi-life-preserver"></i>
                 <span>Documentation</span>
@@ -41,7 +41,7 @@
                 <i class="bi bi-puzzle"></i>
                 <span>Contribute</span>
             </a>
-        </li>
+        </li> --}}
 
         <li class="sidebar-item">
             <a href="#" class="sidebar-link" id="sidebar-logout">
